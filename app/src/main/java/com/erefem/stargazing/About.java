@@ -3,14 +3,21 @@ package com.erefem.stargazing;
 import static android.text.Html.fromHtml;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Properties;
+
 public class About extends AppCompatActivity {
 
+    private Context context;
+    private Properties properties;
+    private PropertiesReader propertiesReader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +29,10 @@ public class About extends AppCompatActivity {
 
         TextView tvContact =(TextView) findViewById(R.id.tvcontact);
 
-        tvContact.setText(fromHtml("</font><font color='#3b5998'>Contact Us</font>"));
+        propertiesReader = new PropertiesReader(this);
+        properties = propertiesReader.getMyProperties("Sample.txt");
+
+        tvContact.setText(fromHtml(properties.getProperty("contactHtml")));
 
         tvContact.setOnClickListener(new View.OnClickListener() {
             @Override
